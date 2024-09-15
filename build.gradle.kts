@@ -1,7 +1,7 @@
-import io.izzel.taboolib.gradle.BUKKIT
 import io.izzel.taboolib.gradle.Basic
+import io.izzel.taboolib.gradle.Bukkit
 import io.izzel.taboolib.gradle.BukkitNMSUtil
-import io.izzel.taboolib.gradle.UNIVERSAL
+import io.izzel.taboolib.gradle.BukkitUtil
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -10,10 +10,18 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.9.22"
 }
 
+kotlin {
+    sourceSets.all {
+        languageSettings {
+            languageVersion = "2.0"
+        }
+    }
+}
+
 taboolib {
     env {
         // 安装模块
-        install(Basic, BukkitNMSUtil)
+        install(Basic, BukkitNMSUtil, Bukkit, BukkitUtil)
     }
     version { taboolib = "6.2.0-beta3" }
 }
@@ -40,7 +48,7 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-configure<JavaPluginConvention> {
+configure<JavaPluginExtension> {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
